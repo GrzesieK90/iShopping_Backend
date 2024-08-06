@@ -10,10 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 // Połączenie z bazą danych
-mongoose.connect('mongodb+srv://gregdevk:14Mongo02DB90Greg@cluster0.nqkvogs.mongodb.net/e-commerce', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect('mongodb+srv://gregdevk:14Mongo02DB90Greg@cluster0.nqkvogs.mongodb.net/e-commerce');
 
 const storage = multer.diskStorage({
   destination: './upload/images',
@@ -170,6 +167,11 @@ app.post('/removefromcart', fetchUser, async (req, res) => {
 app.post('/getcart', fetchUser, async (req, res) => {
   let userData = await Users.findOne({ _id: req.user.id });
   res.json(userData.cartData);
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 module.exports = app;
